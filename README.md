@@ -1,3 +1,63 @@
+# libxxd
+A library to extend functionality provided by the original project (see below)., Some work to be done yet ...
+
+### Typical Usage
+```go
+	fileName := "./testdata/hello.txt"
+
+	inFile, err := os.Open(fileName)
+	if err != nil {
+		t.Error(err)
+	}
+
+	buf := &bytes.Buffer{}
+	writer := bufio.NewWriter(buf)
+
+	xxdCfg := &xxd.Config{DumpType: 0, AutoSkip: false, Bars: true}
+	if err := xxd.XxdBasic(inFile, writer, xxdCfg); err != nil {
+		t.Error(err)
+	}
+	writer.Flush()
+	//buf should now have the data
+
+
+```
+
+### Output
+
+```shell
+
+rbalgi@Raghavendras-iMac libxxd % go test -test.v -test.v ./...
+=== RUN   TestXXD
+0000000: 6865 6c6c 6f2c 2077 6f72 6c64 2120 5468   hello, world! Th
+0000010: 6973 2069 7320 7361 7475 7264 6179 2074   is is saturday t
+0000020: 6865 2032 3974 6820 6f66 204e 6f76 656d   he 29th of Novem
+0000030: 6265 7220 3230 3235 2e20 4927 6d20 7472   ber 2025. I'm tr
+0000040: 7969 6e67 2074 6f20 706f 7274 2074 6869   ying to port thi
+0000050: 7320 746f 2061 206c 6962 7261 7279 2073   s to a library s
+0000060: 7479 6c65 2070 6163 6b61 6765 2057 6865   tyle package Whe
+0000070: 7265 7265 7272 7265 6572 3f3f 3f3f 3f3f   rererrreer??????
+0000080: 3f3f 3f3f 3f3f 3f0a 6865 6c6c 6f20 776f   ???????.hello wo
+0000090: 720a                                      r.
+
+--- PASS: TestXXD (0.00s)
+PASS
+ok  	github.com/rkbalgi/libxxd	(cached)
+?   	github.com/rkbalgi/libxxd/cmd	[no test files]
+rbalgi@Raghavendras-iMac libxxd % xxd ./testdata/hello.txt
+00000000: 6865 6c6c 6f2c 2077 6f72 6c64 2120 5468  hello, world! Th
+00000010: 6973 2069 7320 7361 7475 7264 6179 2074  is is saturday t
+00000020: 6865 2032 3974 6820 6f66 204e 6f76 656d  he 29th of Novem
+00000030: 6265 7220 3230 3235 2e20 4927 6d20 7472  ber 2025. I'm tr
+00000040: 7969 6e67 2074 6f20 706f 7274 2074 6869  ying to port thi
+00000050: 7320 746f 2061 206c 6962 7261 7279 2073  s to a library s
+00000060: 7479 6c65 2070 6163 6b61 6765 2057 6865  tyle package Whe
+00000070: 7265 7265 7272 7265 6572 3f3f 3f3f 3f3f  rererrreer??????
+00000080: 3f3f 3f3f 3f3f 3f0a 6865 6c6c 6f20 776f  ???????.hello wo
+00000090: 720a                                     r.
+rbalgi@Raghavendras-iMac libxxd %
+
+
 # go-xxd
 
 This repository contains my answer to [How can I improve the performance of
