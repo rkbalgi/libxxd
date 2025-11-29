@@ -1,4 +1,4 @@
-module github.com/felixge/go-xxd
+module github.com/rkbalgi/libxxd
 
 go 1.18
 
