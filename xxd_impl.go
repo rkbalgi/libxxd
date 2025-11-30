@@ -240,12 +240,42 @@ func Xxd(r io.Reader, w io.Writer, fname string, xxdCfg *Config) error {
 		}
 
 		if n < len(line) && dumpType <= DumpBinary {
-			for i := n * octs; i < len(line)*octs; i++ {
-				w.Write(space)
 
-				if i%octs == 1 {
-					w.Write(space)
+			//Each line should have len(line), but we have a deficit
+			//deficit := len(line) - n
+			maxGroupsPerLine := len(line) / groupSize
+
+			//'n' can fill up how many groupSize? ..//k will be the deficit
+			k := n
+			totalGroups := 1
+			for k > 0 {
+				k = k - groupSize
+
+				if k >= 0 {
+					totalGroups++
 				}
+			}
+
+			if k < 0 {
+				//incomplete group
+				for ; k < 0; k++ {
+					w.Write(twoSpaces)
+				}
+			} else if k == 0 {
+
+				for i := 0; i < groupSize; i++ {
+					w.Write(twoSpaces)
+				}
+			}
+			w.Write(space)
+
+			//finish off the rest
+
+			for i := totalGroups; i < maxGroupsPerLine; i++ {
+				for i := 0; i < groupSize; i++ {
+					w.Write(twoSpaces)
+				}
+				w.Write(space)
 			}
 		}
 
@@ -254,8 +284,13 @@ func Xxd(r io.Reader, w io.Writer, fname string, xxdCfg *Config) error {
 		}
 
 		if dumpType <= DumpBinary {
+
+			w.Write(space)
+
 			// Character values
+
 			b := line[:n]
+
 			// |hello, world!| instead of hello, world!
 			if xxdCfg.Bars {
 				w.Write(bar)
@@ -290,9 +325,11 @@ func Xxd(r io.Reader, w io.Writer, fname string, xxdCfg *Config) error {
 					}
 				}
 			}
+
 			if xxdCfg.Bars {
 				w.Write(bar)
 			}
+
 		}
 		w.Write(newLine)
 		nl++

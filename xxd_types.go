@@ -42,6 +42,7 @@ var (
 	dumpType int
 
 	space        = []byte(" ")
+	twoSpaces    = []byte("  ")
 	doubleSpace  = []byte("  ")
 	dot          = []byte(".")
 	newLine      = []byte("\n")
