@@ -12,12 +12,12 @@ const (
 	udigits = "0123456789ABCDEF"
 )
 
-func XxdBasic(r io.Reader, w io.Writer, xxdCfg *XxdConfig) error {
+func XxdBasic(r io.Reader, w io.Writer, xxdCfg *Config) error {
 	return Xxd(r, w, "-", xxdCfg)
 
 }
 
-func Xxd(r io.Reader, w io.Writer, fname string, xxdCfg *XxdConfig) error {
+func Xxd(r io.Reader, w io.Writer, fname string, xxdCfg *Config) error {
 	var (
 		lineOffset int64
 		hexOffset  = make([]byte, 6)

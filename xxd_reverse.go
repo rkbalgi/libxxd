@@ -5,7 +5,7 @@ import (
 	"io"
 )
 
-func XxdReverse(r io.Reader, w io.Writer, xxdCfg *XxdConfig) error {
+func XxdReverse(r io.Reader, w io.Writer, xxdCfg *Config) error {
 	var (
 		cols int
 		octs int

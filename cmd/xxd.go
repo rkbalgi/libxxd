@@ -58,7 +58,7 @@ func main() {
 		upper      = flag.BoolP("uppercase", "u", false, "use uppercase hex letters")
 		version    = flag.BoolP("version", "v", false, "print version")
 	)
-	xxdCfg := &xxd.XxdConfig{}
+	xxdCfg := &xxd.Config{}
 
 	flag.Usage = func() {
 		fmt.Fprintln(os.Stderr, Help)

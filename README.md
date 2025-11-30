@@ -1,3 +1,64 @@
+#libxxd
+A library to extend functionality provided by the original project (see below)., Some work to be done yet ...
+
+### Typical Usage
+```go
+	fileName := "./testdata/hello.txt"
+
+	inFile, err := os.Open(fileName)
+	if err != nil {
+		t.Error(err)
+	}
+
+	buf := &bytes.Buffer{}
+	writer := bufio.NewWriter(buf)
+
+	xxdCfg := &xxd.Config{DumpType: 0, AutoSkip: false, Bars: true}
+	if err := xxd.XxdBasic(inFile, writer, xxdCfg); err != nil {
+		t.Error(err)
+	}
+	writer.Flush()
+	//buf should now have the data
+
+
+```
+
+### Output
+
+```shell
+
+
+rbalgi@Raghavendras-iMac libxxd % go test -test.v -test.v ./...
+=== RUN   TestXXD
+0000000: 68656c6c 6f2c2077 6f726c64 21205468  |hello, world! Th|
+0000010: 69732069 73207361 74757264 61792074  |is is saturday t|
+0000020: 68652032 39746820 6f66204e 6f76656d  |he 29th of Novem|
+0000030: 62657220 32303235 2e204927 6d207472  |ber 2025. I'm tr|
+0000040: 79696e67 20746f20 706f7274 20746869  |ying to port thi|
+0000050: 7320746f 2061206c 69627261 72792073  |s to a library s|
+0000060: 74796c65 20706163 6b616765 0a596561  |tyle package.Yea|
+0000070: 68205965 6168                               |h Yeah|
+
+--- PASS: TestXXD (0.00s)
+PASS
+ok  	github.com/rkbalgi/libxxd	0.482s
+?   	github.com/rkbalgi/libxxd/cmd	[no test files]
+```
+
+Still some spacing issues etc as compared to the original xxd .. 
+
+```shell
+rbalgi@Raghavendras-iMac libxxd % xxd ./testdata/hello.txt
+00000000: 6865 6c6c 6f2c 2077 6f72 6c64 2120 5468  hello, world! Th
+00000010: 6973 2069 7320 7361 7475 7264 6179 2074  is is saturday t
+00000020: 6865 2032 3974 6820 6f66 204e 6f76 656d  he 29th of Novem
+00000030: 6265 7220 3230 3235 2e20 4927 6d20 7472  ber 2025. I'm tr
+00000040: 7969 6e67 2074 6f20 706f 7274 2074 6869  ying to port thi
+00000050: 7320 746f 2061 206c 6962 7261 7279 2073  s to a library s
+00000060: 7479 6c65 2070 6163 6b61 6765 0a59 6561  tyle package.Yea
+00000070: 6820 5965 6168                           h Yeah
+```
+
 # go-xxd
 
 This repository contains my answer to [How can I improve the performance of

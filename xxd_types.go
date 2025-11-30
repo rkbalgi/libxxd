@@ -57,7 +57,7 @@ var (
 	bar          = []byte("|")
 )
 
-type XxdConfig struct {
+type Config struct {
 	DumpType   int
 	AutoSkip   bool
 	Bars       bool
@@ -72,28 +72,11 @@ type XxdConfig struct {
 	Seek       string
 	Upper      bool
 	Version    bool
-
-	//	var (
-	//	//autoskip   = flag.BoolP("autoskip", "a", false, "toggle autoskip (* replaces nul lines")
-	//	//bars       = flag.BoolP("bars", "B", false, "print |ascii| instead of ascii")
-	//	//binary     = flag.BoolP("binary", "b", false, "binary dump, incompatible with -ps, -i, -r")
-	//	//columns    = flag.IntP("cols", "c", -1, "format <cols> octets per line")
-	//	//ebcdic     = flag.BoolP("ebcdic", "E", false, "use EBCDIC instead of ASCII")
-	//	//group      = flag.IntP("group", "g", -1, "num of octets per group")
-	//	//cfmt       = flag.BoolP("include", "i", false, "output in C include format")
-	//	//length     = flag.Int64P("len", "l", -1, "stop after len octets")
-	//	//postscript = flag.BoolP("ps", "p", false, "output in postscript plain hd style")
-	//	//reverse    = flag.BoolP("reverse", "r", false, "convert hex to binary")
-	//	//seek       = flag.StringP("seek", "s", "", "start at seek bytes abs")
-	//	upper      = flag.BoolP("uppercase", "u", false, "use uppercase hex letters")
-	//	version    = flag.BoolP("version", "v", false, "print version")
-	//
-	// )
 }
 
-type XxdOption func(cfg *XxdConfig)
+type Option func(cfg *Config)
 
-func WithEbcdic(cfg *XxdConfig) {
+func WithEbcdic(cfg *Config) {
 	cfg.Ebcdic = true
 }
 
