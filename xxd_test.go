@@ -28,7 +28,7 @@ func TestXXD(t *testing.T) {
 	if err := xxd.XxdBasic(r, w, xxdCfg); err != nil {
 		t.Error(err)
 	}
-	writer.Flush()
+	w.Flush()
 	fmt.Println(buf.String())
 	expectedLen := 666
 	if len(buf.Bytes()) != expectedLen {

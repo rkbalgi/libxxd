@@ -245,29 +245,22 @@ func Xxd(r io.Reader, w io.Writer, fname string, xxdCfg *Config) error {
 			maxGroupsPerLine := len(line) / groupSize
 
 			//'n' can fill up how many groups?
-			k := n
+			deficit := n
 			totalGroups := 1
-			for k > 0 {
-				k = k - groupSize
+			for deficit > 0 {
+				deficit = deficit - groupSize
 
-				if k >= 0 {
+				if deficit > 0 {
 					totalGroups++
 				}
 			}
-			//k will be now be the deficit of the last incomplete group
-
-			if k < 0 {
+			if deficit < 0 {
 				//incomplete group
-				for ; k < 0; k++ {
+				for ; deficit < 0; deficit++ {
 					w.Write(twoSpaces)
 				}
-			} else if k == 0 {
-
-				for i := 0; i < groupSize; i++ {
-					w.Write(twoSpaces)
-				}
+				w.Write(space)
 			}
-			w.Write(space)
 
 			//finish off the rest of the deficit groups
 
