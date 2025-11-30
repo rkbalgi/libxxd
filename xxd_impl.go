@@ -242,10 +242,9 @@ func Xxd(r io.Reader, w io.Writer, fname string, xxdCfg *Config) error {
 		if n < len(line) && dumpType <= DumpBinary {
 
 			//Each line should have len(line), but we have a deficit
-			//deficit := len(line) - n
 			maxGroupsPerLine := len(line) / groupSize
 
-			//'n' can fill up how many groupSize? ..//k will be the deficit
+			//'n' can fill up how many groups?
 			k := n
 			totalGroups := 1
 			for k > 0 {
@@ -255,6 +254,7 @@ func Xxd(r io.Reader, w io.Writer, fname string, xxdCfg *Config) error {
 					totalGroups++
 				}
 			}
+			//k will be now be the deficit of the last incomplete group
 
 			if k < 0 {
 				//incomplete group
@@ -269,7 +269,7 @@ func Xxd(r io.Reader, w io.Writer, fname string, xxdCfg *Config) error {
 			}
 			w.Write(space)
 
-			//finish off the rest
+			//finish off the rest of the deficit groups
 
 			for i := totalGroups; i < maxGroupsPerLine; i++ {
 				for i := 0; i < groupSize; i++ {
