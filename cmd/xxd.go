@@ -147,8 +147,6 @@ func main() {
 		return
 	}
 
-	fmt.Printf("%+v %s %+v\n", inFile, file, *xxdCfg)
-
 	if err = xxd.Xxd(inFile, out, file, xxdCfg); err != nil {
 		log.Fatalln(err)
 	}

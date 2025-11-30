@@ -2,7 +2,6 @@ package xxd
 
 import (
 	"bufio"
-	"fmt"
 	"io"
 	"log"
 	"strconv"
@@ -12,6 +11,11 @@ const (
 	ldigits = "0123456789abcdef"
 	udigits = "0123456789ABCDEF"
 )
+
+func XxdBasic(r io.Reader, w io.Writer, xxdCfg *XxdConfig) error {
+	return Xxd(r, w, "-", xxdCfg)
+
+}
 
 func Xxd(r io.Reader, w io.Writer, fname string, xxdCfg *XxdConfig) error {
 	var (
@@ -30,8 +34,6 @@ func Xxd(r io.Reader, w io.Writer, fname string, xxdCfg *XxdConfig) error {
 		nulLine    int64
 		totalOcts  int
 	)
-
-	fmt.Println("called with " + fname)
 
 	// Generate the first and last line in the -i output:
 	// e.g. unsigned char foo_txt[] = { and unsigned int foo_txt_len =
@@ -108,7 +110,7 @@ func Xxd(r io.Reader, w io.Writer, fname string, xxdCfg *XxdConfig) error {
 	}
 
 	// These are bumped down from the beginning of the function in order to
-	// allow for their sizes to be allocated based on the user's speficiations
+	// allow for their sizes to be allocated based on the user's specification
 	var (
 		line = make([]byte, cols)
 		char = make([]byte, octs)
@@ -220,7 +222,6 @@ func Xxd(r io.Reader, w io.Writer, fname string, xxdCfg *XxdConfig) error {
 			// Hex values -- default xxd FILE output
 			for i, k := 0, octs; i < n; i, k = i+1, k+octs {
 				hexEncode(char, line[i:i+1], caps)
-				//fmt.Println(char)
 				w.Write(char)
 				c++
 

@@ -3,9 +3,8 @@ package xxd_test
 import (
 	"bufio"
 	"bytes"
-	"encoding/hex"
 	"fmt"
-	"io/ioutil"
+
 	"os"
 	"testing"
 
@@ -21,21 +20,19 @@ func TestXXD(t *testing.T) {
 		t.Error(err)
 	}
 
-	fmt.Println(inFile)
+	buf := &bytes.Buffer{}
+	writer := bufio.NewWriter(buf)
 
-	data, _ := ioutil.ReadAll(inFile)
-	t.Log(hex.EncodeToString(data))
+	xxdCfg := &xxd.XxdConfig{DumpType: 0, AutoSkip: false, Bars: true, Binary: false, Columns: -1, Ebcdic: false, Group: 16, Cfmt: false, Length: -1, Postscript: false, Reverse: false, Seek: "", Upper: false, Version: false}
 
-	b := &bytes.Buffer{}
-	buf := bufio.NewWriter(b)
-	//println(buf.Size())
-	xxdCfg := &xxd.XxdConfig{DumpType: 0, AutoSkip: false, Bars: true, Binary: false, Columns: -1, Ebcdic: false, Group: -1, Cfmt: false, Length: -1, Postscript: false, Reverse: false, Seek: "", Upper: false, Version: false}
-	//xxdCfg.DumpType = xxd.DumpPostscript
-
-	if err := xxd.Xxd(inFile, buf, fileName, xxdCfg); err != nil {
+	if err := xxd.XxdBasic(inFile, writer, xxdCfg); err != nil {
 		t.Error(err)
 	}
+	writer.Flush()
+	expectedLen := 495
+	if len(buf.Bytes()) != expectedLen {
+		t.Fatal(fmt.Sprintf("Expected: <%d>, Got: <%d>", expectedLen, len(buf.Bytes())))
 
-	println(buf.Size())
-	t.Log(b)
+	}
+
 }
