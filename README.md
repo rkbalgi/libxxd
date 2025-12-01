@@ -1,5 +1,5 @@
 # libxxd
-A library to extend functionality provided by the original project (see below)., Some work to be done yet ...
+A library to extend functionality provided by the original project (see below - doc from the original project).
 
 ### Typical Usage
 ```go

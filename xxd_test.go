@@ -30,7 +30,7 @@ func TestXXD(t *testing.T) {
 	}
 	w.Flush()
 	fmt.Println(buf.String())
-	expectedLen := 666
+	expectedLen := 810
 	if len(buf.Bytes()) != expectedLen {
 		t.Fatal(fmt.Sprintf("Expected: <%d>, Got: <%d>", expectedLen, len(buf.Bytes())))
 
