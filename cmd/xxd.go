@@ -7,7 +7,7 @@ import (
 	"os"
 	"strconv"
 
-	xxd "github.com/rkbalgi/libxxd"
+	xxd "github.com/rkbalgi/libxxd/xxd"
 
 	flag "github.com/ogier/pflag"
 )

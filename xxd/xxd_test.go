@@ -8,12 +8,12 @@ import (
 	"os"
 	"testing"
 
-	xxd "github.com/rkbalgi/libxxd"
+	xxd "github.com/rkbalgi/libxxd/xxd"
 )
 
 func TestXXD(t *testing.T) {
 
-	fileName := "./testdata/hello.txt"
+	fileName := "../testdata/hello.txt"
 
 	r, err := os.Open(fileName)
 	if err != nil {
